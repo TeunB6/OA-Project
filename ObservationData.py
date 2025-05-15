@@ -29,7 +29,13 @@ class ObservationData:
                 directory.append(row)
         
         self.directory_frame = pd.DataFrame(directory)
+       
+    def load_data(self, expression) -> np.ndarray:
+        files = self.filter(expression, replace=False)
+        data = np.array([fits.getdata(os.path.join(data_dir, f)) for f in files["FILENAME"]
+        return np.dstack(data)
     
+    @staticmethod
     def plot_gray_scale(data: np.ndarray | str, title: str) -> None:
         if isinstance(data, str):
             data = fits.getdata(data)
@@ -43,7 +49,7 @@ class ObservationData:
         plt.tight_layout()
         plt.show()
         
-    def filter(self, expression: str, replace: bool) -> pd.DataFrame | None:
+    def filter(self, expression: str, replace: bool = False) -> pd.DataFrame | None:
         if replace:
             self.directory_frame = self.directory_frame.query(expression)
         else:
