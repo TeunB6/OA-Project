@@ -57,7 +57,7 @@ class ObservationData:
             data = fits.getdata(data)
             
         fig, ax = plt.subplots(figsize=(10,8))
-        img_display = ax.imshow(data, cmap='gray', vmin=np.percentile(data, 5), vmax=np.percentile(data, 95))
+        img_display = ax.imshow(data, cmap='gray', vmin=np.percentile(data, 1), vmax=np.percentile(data, 99))
         cbar = fig.colorbar(img_display, ax=ax)
 
         ax.set_title(title, pad=20)
